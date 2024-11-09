@@ -3,7 +3,7 @@ from pytubefix import YouTube
 from pytubefix.cli import on_progress
 import assemblyai as aai
 
-############## Unexcueted Imports ##################
+############## Unexecuted Imports ##################
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_google_genai import GoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 from langchain_community.vectorstores import FAISS
@@ -16,7 +16,7 @@ from langchain.chains import LLMChain
 
 import google.generativeai as genai
 
-###### Provide Your Gemini Ai API ##########
+###### Provide Your Gemini Ai API Key  here ##########
 genai.configure(api_key="GOOGLE_PALM_API_KEY")
 
 from dotenv import load_dotenv
@@ -65,7 +65,7 @@ def VectorStore(chunks):
     return vectorstore
 
 
-############################## Starting Point: Code implemented but not yet executed due to API limitations. #####################################################
+############################## Ending Point: Code implemented but not yet executed due to API limitations. #####################################################
 
 def scrapeURL(url):
     
@@ -92,7 +92,7 @@ def scrapeURL(url):
         print(title)
         ys = yt.streams.get_audio_only()
         try:
-            #################  Provide the ASSEMBLY AI API KEY ####################
+            #################  Provide Your ASSEMBLY AI API KEY  Here ####################
             aai.settings.api_key = "ASSEMBLY__AI_API_KEY"
             transcriber = aai.Transcriber()
             print(ys.url)
@@ -193,7 +193,7 @@ def main(content,query):
 
     chain=LLMChain(prompt=prompt_template,llm=llm)
     try:
-        res = qa_chain({"query": query+ ". Please provide the answer in HTML format, using appropriate tags for headings, paragraphs, and emphasis.Use tailwindcss "})
+        res = qa_chain({"query": query+ ". Please provide the answer in HTML format, using appropriate tags for headings, paragraphs, and emphasis. Use tailwindcss "})
         # res = qa_chain({"query": query+ ". Please provide the answer in Markdown format, including appropriate headings, lists, bold, and italics. and highlight the questions,subheadings e.t.c"})
         result = res['result'] 
         # result['llm_chain'] = llm(result['result'] + "write about this in detail")
