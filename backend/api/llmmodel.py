@@ -78,6 +78,7 @@ def scrapeURL(url):
     title = ''
     c=0
     try:
+        ### Accessing Transcription of a YouTube Video (Captions) Auto Generated captions cannot be accessed 
         transcript=YouTubeTranscriptApi.get_transcript(Validated_url)
         for i in transcript:
             text+=i['text']
@@ -87,6 +88,7 @@ def scrapeURL(url):
         print("You Tube Transcription Not found")
 
     try:
+        ## Accessing Audio of the youtube Video
         yt = YouTube(url)
         title = yt.title
         print(title)
@@ -96,6 +98,7 @@ def scrapeURL(url):
             aai.settings.api_key = "ASSEMBLY__AI_API_KEY"
             transcriber = aai.Transcriber()
             print(ys.url)
+            ## Using Assembly ai stt ( Speech to Text ) model 
             transcript = transcriber.transcribe(ys.url)
             text += transcript.text
             c=0
@@ -109,9 +112,10 @@ def scrapeURL(url):
         error = f"Can't fetch the data of url {url}"
     return [title,text,error]
 
+
+## Model to create a chat name 
 def get_chat_name(content):
     model = genai.GenerativeModel("gemini-1.5-flash")
-
     prompt = f"""
         Generate the title for the given content.
         Content: {content}.
@@ -170,8 +174,6 @@ def main(content,query):
 
         </div>
     """
-
-
     response = model.generate_content(prompt)
 
     return response.text

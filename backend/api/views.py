@@ -4,6 +4,7 @@ from rest_framework import generics
 from rest_framework.permissions import AllowAny,IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.exceptions import NotFound
 
 from django.contrib.auth.models import User
 
@@ -25,7 +26,7 @@ class CreateUserProfileView(generics.CreateAPIView):
         try:
             user=User.objects.get(id=id)
         except:
-            return Response({"message":"User with the given is not existed"})
+            return Response({"message":"User with the given id is not existed"})
         serializer=UserProfileSerializer(data=request.data)
         if serializer.is_valid():
             user_instance = get_object_or_404(User, id=id)
@@ -53,121 +54,52 @@ class UserProfileView(generics.CreateAPIView):
             return Response(serializer.errors)
         return Response(serializer.data)
 
-class ChatView(generics.GenericAPIView):
+class ChatView(generics.ListCreateAPIView):
     queryset=Chat.objects.all()
     permission_classes=[AllowAny]
     serializer_class=ChatSerializer
 
-    def get(self,request,name):
-        name=User.objects.get(username=name)
+    def get_queryset(self):
+        name=User.objects.get(username=self.kwargs.get('name'))
         user=UserProfile.objects.get(user=name)
-        chat= Chat.objects.filter(user=user).order_by('-id')
-        serializer=ChatSerializer(chat,many=True)
-        return Response(serializer.data)
-
-    def post(self,request,name):
-        name=User.objects.get(username=name)
-        user=UserProfile.objects.get(user=name)
-        if user:
-            serializer=ChatSerializer(data=request.data)
-            if serializer.is_valid():
-                user_instance = get_object_or_404(UserProfile, user=name)
-                serializer.save(user=user_instance)
-           
-        return Response(serializer.data)
+        return self.queryset.filter(user=user).order_by('-id')
     
-class DetailedChatView(generics.GenericAPIView):
+    def perform_create(self,serializer):
+        name=User.objects.get(username=self.kwargs.get('name'))
+        user=UserProfile.objects.get(user=name)
+        serializer.save(user=user)
+
+    
+class DetailedChatView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Chat.objects.all()
+    serializer_class = ChatSerializer
+    permission_classes = [AllowAny]
+    lookup_url_kwarg = 'id'
+
+
+class VideoContentView(generics.ListCreateAPIView):
     queryset=VideoContent.objects.all()
     permission_classes=[AllowAny]
-    serializer_class=ChatSerializer
+    serializer_class =  VideoContentSerializer  
 
-    def get(self,request,id):
-        chat= Chat.objects.get(id=id)   
-        serializer=ChatSerializer(chat)
-        return Response(serializer.data)
-    
-    def patch(self,request,id):
-        chat= Chat.objects.get(id=id)
-        serializer=ChatSerializer(chat,data=request.data,partial=True) 
-        if serializer.is_valid():
-            serializer.save()
-        else:
-            return Response(serializer.errors)
-        return Response(serializer.data)
-    
-    def delete(self,request,id):
-        chat= Chat.objects.get(id=id)
-        chat.delete()
+    def get_queryset(self):
+        chat = get_object_or_404(Chat,id=self.kwargs.get('id'))
+        return self.queryset.filter(chat=chat)
 
-        return Response({"message":"Successfully deleted"})
-    
-    def put(self,request,id):
-        chat= Chat.objects.get(id=id)
-        serializer=ChatSerializer(chat,data=request.data) 
-        if serializer.is_valid():
-            serializer.save()
-        else:
-            return Response(serializer.errors)
-        return Response(serializer.data)
+    def perform_create(self,serializer):
+        chat_id = self.kwargs.get('id')
+        try:
+            chat = Chat.objects.get(id=chat_id)
+        except Chat.DoesNotExist:
+            raise NotFound(f"Chat with id {chat_id} not found.")
+        
+        serializer.save(chat=chat)
 
-
-class VideoContentView(generics.GenericAPIView):
-    queryset=VideoContent.objects.all()
-    permission_classes=[AllowAny]
-
-    def get_serializer_class(self):
-        return VideoContentSerializer  
-
-    def post(self,request,id):
-        chat=Chat.objects.get(id=id)
-        if chat:
-            serializer=VideoContentSerializer(data=request.data)
-            if serializer.is_valid():
-                chat_instance = get_object_or_404(Chat, id=id)
-                serializer.save(chat=chat_instance)
-           
-        return Response(serializer.data)
-    
-    def get(self,request,id):
-        chat=Chat.objects.get(id=id)
-        video_content= VideoContent.objects.filter(chat=chat)   
-        serializer=VideoContentSerializer(video_content,many=True)
-        return Response(serializer.data)
-    
-class DetailedVideoContentView(generics.GenericAPIView):
+class DetailedVideoContentView(generics.RetrieveUpdateDestroyAPIView):
     queryset=VideoContent.objects.all()
     permission_classes=[AllowAny]
     serializer_class=VideoContentSerializer
-
-    def get(self,request,pk):
-        video_content= VideoContent.objects.get(id=pk)   
-        serializer=VideoContentSerializer(video_content)
-        return Response(serializer.data)
-    
-    
-    def patch(self,request,pk):
-        video_content= VideoContent.objects.get(id=pk)
-        serializer=VideoContentSerializer(video_content,data=request.data,partial=True) 
-        if serializer.is_valid():
-            serializer.save()
-        else:
-            return Response(serializer.errors)
-        return Response(serializer.data)
-    
-    def delete(self,request,pk):
-        video_content= VideoContent.objects.get(id=pk)
-        video_content.delete()
-
-        return Response({"message":"Successfully deleted"})
-    
-    def put(self,request,pk):
-        video_content= VideoContent.objects.get(id=pk)
-        serializer=VideoContentSerializer(video_content,data=request.data) 
-        if serializer.is_valid():
-            serializer.save()
-        else:
-            return Response(serializer.errors)
-        return Response(serializer.data)
+    lookup_field = 'id'
 
 
 class UrlScraperView(APIView):
