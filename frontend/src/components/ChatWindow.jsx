@@ -66,10 +66,3 @@ const ChatWindow = () => {
 }
 
 export default ChatWindow;
-
-export const ChatInfoLoader = async () => {
-    try {
-        const res = await api.get(`/api/video_content/${chat}/`)
-        console.log(res.data);
-    } catch (e) { console.log(e); }
-}
