@@ -56,7 +56,7 @@ class UserProfileView(generics.CreateAPIView):
 
 class ChatView(generics.ListCreateAPIView):
     queryset=Chat.objects.all()
-    permission_classes=[AllowAny]
+    permission_classes=[IsAuthenticated]
     serializer_class=ChatSerializer
 
     def get_queryset(self):
@@ -73,13 +73,13 @@ class ChatView(generics.ListCreateAPIView):
 class DetailedChatView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Chat.objects.all()
     serializer_class = ChatSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     lookup_url_kwarg = 'id'
 
 
 class VideoContentView(generics.ListCreateAPIView):
     queryset=VideoContent.objects.all()
-    permission_classes=[AllowAny]
+    permission_classes=[IsAuthenticated]
     serializer_class =  VideoContentSerializer  
 
     def get_queryset(self):
@@ -97,13 +97,13 @@ class VideoContentView(generics.ListCreateAPIView):
 
 class DetailedVideoContentView(generics.RetrieveUpdateDestroyAPIView):
     queryset=VideoContent.objects.all()
-    permission_classes=[AllowAny]
+    permission_classes=[IsAuthenticated]
     serializer_class=VideoContentSerializer
     lookup_field = 'id'
 
 
 class UrlScraperView(APIView):
-    permission_classes=[AllowAny]
+    permission_classes=[IsAuthenticated]
     def post(self,request):
         try:
             title,content,error = scrapeURL(request.data['url'])
@@ -115,7 +115,7 @@ class UrlScraperView(APIView):
         return Response({"message":"Invalid URL"},status=400)
     
 class ModelQueryView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def post(self,request,id):
         try:
