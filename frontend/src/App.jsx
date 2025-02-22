@@ -6,6 +6,8 @@ import LoginLogout from './pages/LoginLogout'
 import Register from './pages/Register'
 import ProtectedRoute from './components/ProtectedRoute'
 import LocomotiveScroll from 'locomotive-scroll'
+import ChatWindow,{ChatInfoLoader} from './components/ChatWindow'
+import ChatForm from './components/ChatForm'
 
 const Logout=()=>{
   localStorage.clear();
@@ -33,7 +35,10 @@ const App = () => {
             <ChatApp  />
           </ProtectedRoute>
          }
-      />
+      >
+        <Route index element= {<ChatForm/>} />
+        <Route path=":chat/"  loader={ChatInfoLoader} element= {<ChatWindow/>} />
+        </Route>
       <Route
         path='/login'
         element={ <LoginLogout/> }

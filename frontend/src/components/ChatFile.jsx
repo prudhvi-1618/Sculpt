@@ -4,8 +4,11 @@ import { assets } from '../assets/assets'
 import { MdDeleteOutline } from "react-icons/md";
 import { FaChevronDown } from "react-icons/fa";
 import api from '../api'
+import { NavLink } from 'react-router-dom';
 
-const ChatFile = ({ chat, onSelect, activateForm, getChat }) => {
+const ChatFile = ({chat}) => {
+
+  // { chat, onSelect, activateForm, getChat }
 
   const [extended, setExtended] = useState(false);
   const [chatURL, SetChatURL] = useState([]);
@@ -35,20 +38,23 @@ const ChatFile = ({ chat, onSelect, activateForm, getChat }) => {
       <div className="top">
 
         <img onClick={() => setExtended(prev => !prev)} className="menu" src={assets.menu_icon} alt='' />
-        <div className="new-chart" onClick={() => { onSelect(null); activateForm(false); }}>
+        <NavLink to="/app" className="new-chart">
           <img src={assets.plus_icon} alt="" />
           {extended ? <p >New Chat</p> : null}
-        </div>
+        </NavLink>
         {extended
           ?
           <div className='recent'>
             <p className="recent-title">Recent</p>
             {chat.map((item, index) => (
-              <div className='w-[20vw] group hover:bg-slate-200 relative  mb-2 rounded-xl  '>
-                <div className=" recent-entry " key={index}>
-                  <div className=' w-[16vw]  flex justify-start items-center gap-4 absolute left-0 '
-                   onClick={() => { onSelect(item.id); }} 
-                  >
+              <div key={index} className='w-[20vw] group hover:bg-slate-200 relative  mb-2 rounded-xl  '>
+                <div className=" recent-entry " >
+                  <NavLink to={`${item.id}/
+                  
+                  `} className=' w-[16vw]  flex justify-start items-center gap-4 absolute left-0 '
+                   
+                   > 
+                    {/* onClick={() => { onSelect(item.id); }}  */}
                     <img src={assets.message_icon} alt="" className='ml-2 ' />
                     <p className="chat  ml-[-15px] h-[5px] pb-[20px] text-ellipsis whitespace-nowrap overflow-hidden ">{item.name}</p>
                     <span 
@@ -56,7 +62,7 @@ const ChatFile = ({ chat, onSelect, activateForm, getChat }) => {
                     >
                       {item.name}
                     </span>
-                  </div>
+                  </NavLink>
                   <div className="drop-down flex justify-between items-center p-2 w-[60px] h-[60px] absolute right-[0px] "
                     onClick={() => {
                       active_chatURL != item.id ? getChatlinks(item.id) : SetChatURL([]); SetactiveChatURL(null);
