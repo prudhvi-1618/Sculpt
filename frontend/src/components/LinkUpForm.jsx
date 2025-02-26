@@ -8,48 +8,42 @@ import { useNavigate } from 'react-router-dom';
 const LinkUpForm = () => {
     const [inputLink, SetinputLink] = useState("");
     let [links, setLinks] = useState([]);
-    let [fetchinglink, SetfetchingLink] = useState(null);
+    const [chat_titles,SetChatTitle] =  useState("");
+    const navigate = useNavigate();
 
     useEffect(() => {
 
     }, [links, setLinks])
 
-    const user = localStorage.getItem(USER_NAME);
-
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (links.length > 0) {
             try {
-                let chat_resp = await api.post(`api/chat/${user}/`, { "name": "new_chat" });
-                for (let i = 0; i < links.length; i++) {
-                    SetfetchingLink(i);
-                    const scrape_url = await api.post('api/url/scrape/', { "url": links[i] })
-                    var chat_title = scrape_url.data.chat_title
-                    let content = scrape_url.data.message
-                    var title = scrape_url.data.title
-                    var error = scrape_url.data.error
-                    console.log(scrape_url.data);
-                    const content_resp = await api.post(`api/video_content/${chat_resp.data.id}/`, {
-                        "url_name": title,
-                        "url": links[i],
-                        "context": content
-                    });
-                    SetfetchingLink(null);
-                }
-                const chat_patch = await api.patch(`api/chat/detail/${chat_resp.data.id}/`, {
-                    "id": chat_resp.data.id,
-                    "name": chat_title
+                const content_resp = await api.post(`api/video_content/`, {
+                    "chat_titles": chat_titles,
+                    "videos": links,
                 });
-                useNavigate(`${chat_resp.data.id}/`)
+                const chat = await content_resp.data.chat.id;
+                navigate(`${chat}/`)
             } catch (e) { console.log(e); }
         }
 
     }
-    const AddData = (e) => {
+    const AddData = async (e) => {
         e.preventDefault();
-        links.push(inputLink);
+        const scrape_url = await api.post('api/url/scrape/', { "url": inputLink});
+        var chat_title = scrape_url.data.chat_title;
+        let content = scrape_url.data.message;
+        var title = scrape_url.data.title;
+        // var error = scrape_url.data.error
+        let video_content =  {
+            "url_name": title,
+            "url": inputLink,
+            "context": content
+        }
+        links.push(video_content);
         setLinks(links);
+        SetChatTitle(chat_titles+" -> "+chat_title);
         SetinputLink("");
     }
     const handleDelete = (link) => {
@@ -71,7 +65,7 @@ const LinkUpForm = () => {
                     return (
                         <div key={index} className='my-2 w-[50vw]'>
                             <div className=' bg-slate-100  rounded-md px-5 py-2 flex justify-between  font-sans text-zinc-900' >
-                                <div className='pt-1'>{link}</div>
+                                <div className='pt-1'>{link.url_name}</div>
                                 <div
                                     className='p-2 hover:rounded-full hover:bg-slate-200 hover:cursor-pointer '
                                     onClick={() => {
@@ -81,7 +75,7 @@ const LinkUpForm = () => {
                                     <RxCross2 />
                                 </div>
                             </div>
-                            {fetchinglink == index ? <div className="my-[-2px] loader-line"></div> : null}
+                            {/* {fetchinglink == link.url ? <div className="my-[-2px] loader-line"></div> : null} */}
                         </div>
                     )
                 })}

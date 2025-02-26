@@ -78,22 +78,35 @@ class DetailedChatView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class VideoContentView(generics.ListCreateAPIView):
-    queryset=VideoContent.objects.all()
-    permission_classes=[IsAuthenticated]
-    serializer_class =  VideoContentSerializer  
+    queryset = VideoContent.objects.all()
+    serializer_class =  VideoContentSerializer
+    permission_classes=[AllowAny]  
 
     def get_queryset(self):
-        chat = get_object_or_404(Chat,id=self.kwargs.get('id'))
+        user = self.request.user
+        chat = get_object_or_404(Chat, user=user)
         return self.queryset.filter(chat=chat)
 
-    def perform_create(self,serializer):
-        chat_id = self.kwargs.get('id')
-        try:
-            chat = Chat.objects.get(id=chat_id)
-        except Chat.DoesNotExist:
-            raise NotFound(f"Chat with id {chat_id} not found.")
-        
-        serializer.save(chat=chat)
+    def post(self,request):
+        user = self.request.user
+        user_obj = get_object_or_404(UserProfile,user=user)
+        videos = self.request.data.get('videos')
+        Chat_title = get_chat_name(self.request.data.get('chat_titles','Default Chat Title'))
+        chat = Chat.objects.create(name = Chat_title,user=user_obj)
+        video_contents = []
+        for video in videos:
+            video_content = VideoContent(
+                url_name=video['url_name'],
+                url=video['url'],
+                context=video.get('context', ''),
+                chat=chat
+            )
+            video_contents.append(video_content)
+        VideoContent.objects.bulk_create(video_contents)
+        return Response({
+            "chat":ChatSerializer(chat).data,
+            "videos":VideoContentSerializer(video_contents,many=True).data
+        })
 
 class DetailedVideoContentView(generics.RetrieveUpdateDestroyAPIView):
     queryset=VideoContent.objects.all()
@@ -108,7 +121,6 @@ class UrlScraperView(APIView):
         try:
             title,content,error = scrapeURL(request.data['url'])
             Chat_title=get_chat_name(content)
-            print(Chat_title,"\n\n\n\n\n")
             return Response({"message":content,'chat_title':Chat_title,'title':title,'error':error})
         except :
             pass
