@@ -21,7 +21,7 @@ const ChatFile = ({ chat }) => {
 
   const getChatlinks = async (id) => {
     try {
-      const res = await api.get(`/api/video_content/${id}/`);
+      const res = await api.get(`/api/video_content/?id=${id}`);
       let urls = []
       res.data.map((item, index) => {
         urls.push(item.url);
@@ -72,7 +72,7 @@ const ChatFile = ({ chat }) => {
                 </div>
                 {item.id == active_chatURL && (<div>
                   {chatURL.map((item, index) => (
-                    <div className='group m-2 '>
+                    <div key={index} className='group m-2 '>
                       <a className='url w-[100%] h-6 pl-2  rounded-md block bg-[#efefef] text-[black] overflow-hidden text-ellipsis whitespace-nowrap ' href={item} target='_blank'> {item}</a>
                       <div
                         className="absolute left-[20vw] top-[-8vw] p-[4px] mt-2 bg-black hidden group-hover:flex z-50 border border-gray-300 shadow-lg rounded-lg overflow-hidden"

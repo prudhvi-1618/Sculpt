@@ -83,8 +83,8 @@ class VideoContentView(generics.ListCreateAPIView):
     permission_classes=[AllowAny]  
 
     def get_queryset(self):
-        user = self.request.user
-        chat = get_object_or_404(Chat, user=user)
+        id = self.request.GET.get('id')
+        chat = get_object_or_404(Chat,id=id)
         return self.queryset.filter(chat=chat)
 
     def post(self,request):
