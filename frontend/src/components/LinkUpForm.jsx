@@ -52,9 +52,9 @@ const LinkUpForm = () => {
     }
     return (
         <div className='flex flex-col gap-8  '>
-            <div className='flex justify-start items-center'>
+            <div className='flex sm:justify-start justify-center items-center '>
                 <form onSubmit={AddData}>
-                    <label htmlFor="" className='text-7xl'>Start the Exploration <br /> Share Your YouTube Clip</label>
+                    <label htmlFor="" className='text-2xl/3 sm:text-7xl'>Start the Exploration <br /> Share Your YouTube Clip</label>
                     <br />
                     <input type="text" className=' mt-10 w-[50vw] h-9 border-2 border-black' value={inputLink} onChange={(e) => SetinputLink(e.target.value)} />
                     <input type='submit' value='Add' className='m-2 py-2 px-4 font-semibold border-2 border-zinc-800 rounded-full cursor-pointer hover:bg-zinc-900 hover:text-zinc-100' />

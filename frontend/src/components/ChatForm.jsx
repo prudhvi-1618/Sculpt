@@ -25,12 +25,12 @@ const ChatForm = () => {
             <div className="main_container ">
                  {isActive?<LinkUpForm  /> :
                     <div
-                        className="wish md:text-8xl sm:text-6xl text-2xl tracking-tight font-semibold uppercase flex flex-col  justify-end ">
+                        className="wish  sm:text-6xl text-[1px]/[0.8] tracking-tight font-semibold uppercase flex flex-col  justify-end ">
                         <p>Every Creation has a story.</p>
                         <p> Begin exploring its  </p>
                         <p>unique tale!</p>
                          <div onClick={() => { activateForm(true) }}
-                            className="button mt-14 group w-48 text-[18px] font-semibold flex justify-evenly items-center py-2 px-4 border-2 border-zinc-700 rounded-3xl hover:bg-zinc-900 hover:text-zinc-300 cursor-pointer ">
+                            className="button mt-14 group w-48 text-[24px] sm:text-[18px] font-semibold flex justify-evenly items-center py-2  px-4 border-2 border-zinc-700 rounded-3xl hover:bg-zinc-900 hover:text-zinc-300 cursor-pointer ">
                             Link Up Video
                             <div className="circle ml-7 bg-zinc-600 w-4 h-4 group-hover:bg-zinc-100 rounded-full cursor-pointer "></div>
                         </div>

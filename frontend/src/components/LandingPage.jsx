@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 const LandingPage = () => {
   return (
     //md:h-screen
-    <div data-scroll data-scroll-section data-scroll-speed="-.85" className='width-full  pt-[10vw]'>
-        <div className="text-structure  md:py-6 py-20 px-20">
+    <div data-scroll data-scroll-section data-scroll-speed="-.85" className='width-full pt-[10vw]'>
+        <div className="text-structure  md:py-6 pt-20 sm:py-20 px-8 sm:px-20">
             {['WE CREATE','Knowledge','at Your Fingertips'].map((item,index)=>{
                 return (
                     <div className='masker font-["Neue_Montreal"]'>
@@ -18,13 +18,13 @@ const LandingPage = () => {
                          animate={{width:"8vw"}}
                          transition={{ease:[0.76, 0, 0.24, 1],duration:0.8}}
                          className='w-[8vw]  h-[4.8vw] mx-1 bg-green-500 rounded-[6px] '></motion.div>)}
-                         <div className='md:text-7xl sm:text-4xl text-2xl tracking-tight font-semibold uppercase '>{item}</div>
+                         <div className='md:text-7xl sm:text-4xl text-4xl tracking-tight font-semibold uppercase '>{item}</div>
                         </div>
                     </div>
                 )
             })}
         </div>
-        <div className="mt-28 px-20 py-6 border-t-[1px] border-zinc-700 md:flex justify-between items-center">
+        <div className="mt-28 px-4 sm:px-20 py-2 sm:py-6 border-t-[1px] border-zinc-700 flex justify-end items-center">
                 {["For the public and private companies","From the first pitch to IPO"].map((item,index)=>{
                     return(
                         <div className='text-md py-2 font-light tracking-tight'></div>

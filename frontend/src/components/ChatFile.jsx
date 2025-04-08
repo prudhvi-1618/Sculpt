@@ -32,11 +32,11 @@ const ChatFile = ({ chat }) => {
   }
 
   return (
-    <div className='sidebar ' style={{ minWidth: !extended ? "6vw" : "19vw" }} >
+    <div className={`sidebar ${"max-md:w-0 max-md:p-0"}`} style={{ minWidth: !extended ? "6vw" : "19vw" }} >
       <div className="top">
 
         <img onClick={() => setExtended(prev => !prev)} className="menu" src={assets.menu_icon} alt='' />
-        <NavLink to="/app" className="new-chart">
+        <NavLink to="/app" className="new-chart sm:visible invisible">
           <img src={assets.plus_icon} alt="" />
           {extended ? <p >New Chat</p> : null}
         </NavLink>

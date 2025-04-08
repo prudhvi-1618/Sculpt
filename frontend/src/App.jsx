@@ -5,7 +5,6 @@ import ChatApp from './pages/ChatApp'
 import LoginLogout from './pages/LoginLogout'
 import Register from './pages/Register'
 import ProtectedRoute from './components/ProtectedRoute'
-import LocomotiveScroll from 'locomotive-scroll'
 import ChatWindow from './components/ChatWindow'
 import ChatForm from './components/ChatForm'
 
@@ -20,7 +19,6 @@ const RegisterLogout=()=>{
 }
 
 const App = () => {
-  const locomotiveScroll = new LocomotiveScroll();
   return (
     <BrowserRouter>
     <Routes>
@@ -31,9 +29,9 @@ const App = () => {
     <Route
         path='/app'
         element={ 
-          <ProtectedRoute>
+          // <ProtectedRoute>
             <ChatApp  />
-          </ProtectedRoute>
+          // </ProtectedRoute>
          }
       >
         <Route index element= {<ChatForm/>} />

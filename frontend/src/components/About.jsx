@@ -3,7 +3,7 @@ import React from 'react'
 const About = () => {
   return (
     //bg-[#CDEA68]
-    <div data-scroll data-scroll-section data-scroll-speed="-.1" className="p-20 bg-[#CDEA68] rounded-t-[20px] text-zinc-700">
+    <div data-scroll data-scroll-section data-scroll-speed="-.1" className="p-10 sm:p-20 bg-[#CDEA68] rounded-t-[20px] text-zinc-700">
       <div className="text-5xl tracking-tighter w-[74vw] ">
         {/* Unlock the power of intelligent search—discover precise answers from videos and web content with just one query.
          Dive into a seamless experience where context meets clarity. */}
@@ -18,7 +18,7 @@ const About = () => {
           </button>
         </div>
         <div className="md:w-1/2 py-10">
-          <div className="h-[70vh] md:w-[35vw] bg-[#b0c859] rounded-3xl"></div>
+          <div className="sm:h-[70vh] md:w-[35vw] bg-[#b0c859] rounded-3xl"></div>
         </div>
 
       </div>

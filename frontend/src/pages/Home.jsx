@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Navbar from '../components/Navbar'
 import LandingPage from '../components/LandingPage'
 import Marquee from '../components/Marquee'
@@ -11,10 +11,12 @@ import LocomotiveScroll from 'locomotive-scroll'
 
 const Home = () => {
 
-  const locomotiveScroll = new LocomotiveScroll();
+  useEffect(()=>{
+    const locomotiveScroll = new LocomotiveScroll();
+  },)
   
   return (
-    <div className="w-full min-h-screen bg-zinc-900 text-white">
+    <div className="w-full  bg-zinc-900 text-white">
       <Navbar/>
       <LandingPage/>
       <Marquee/>

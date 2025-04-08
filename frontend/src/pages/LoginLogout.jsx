@@ -43,7 +43,7 @@ const LoginLogout = () => {
     return (
         <div className='body' >
             <div>
-                <div className='container'>
+                <div className='container sm:w-[500px]'>
                     <div className='Header'>
                         <div className="text">{action}</div>
                         <div className="underline"></div>
