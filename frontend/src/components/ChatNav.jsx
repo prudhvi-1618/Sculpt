@@ -32,7 +32,7 @@ const ChatNav = () => {
             >
                 <img src={assets.user_icon} alt="" />
                 <div className={`absolute right-[3vw] w-[45vw] sm:w-[15vw]  border text-white bg-black p-3 rounded-md  ${showLogout ? 'opacity-100' : 'opacity-0 invisible'} `}>
-                    <div className='text-[15px]  sm:text-[1.5vw] capitalize block' >Hii , Prudhvi</div>
+                    <div className='text-[15px]  sm:text-[1.5vw] capitalize block' >Hii , {username}</div>
                     <Link
                         to='/logout'
                         className="text-[15px] sm:text-[1.4vw] font-medium capitalize transition-opacity duration-300 border bg-black  hover:text-black hover:bg-white px-3 py-1 rounded-full "

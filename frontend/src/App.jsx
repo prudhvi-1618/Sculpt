@@ -29,9 +29,9 @@ const App = () => {
     <Route
         path='/app'
         element={ 
-          // <ProtectedRoute>
+          <ProtectedRoute>
             <ChatApp  />
-          // </ProtectedRoute>
+          </ProtectedRoute>
          }
       >
         <Route index element= {<ChatForm/>} />
