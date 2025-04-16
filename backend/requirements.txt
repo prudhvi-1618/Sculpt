@@ -45,14 +45,7 @@ httpx==0.27.2
 idna==3.7
 jsonpatch==1.33
 jsonpointer==3.0.0
-langchain==0.2.10
-langchain-community==0.2.9
-langchain-core==0.2.39
-langchain-google-genai==1.0.8
-langchain-google-vertexai==1.0.7
-langchain-groq==0.1.9
 langchain-text-splitters==0.2.2
-langsmith==0.1.118
 marshmallow==3.21.3
 multidict==6.0.5
 mypy-extensions==1.0.0
