@@ -1,20 +1,19 @@
 from pathlib import Path
 from datetime import timedelta
+import os 
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+from dotenv import load_dotenv,find_dotenv
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
+load_dotenv(find_dotenv())
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-4nci71fut2=j-z+kx#-2tel*8g*0%)ym1trjc#z%4frw5=32co'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 SIMPLE_JWT = {
    "ACCESS_TOKEN_LIFETIME":timedelta(minutes=30),
@@ -83,10 +82,26 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
+    # "default": {
+    #     "ENGINE": "django.db.backends.mysql",
+    #     "NAME": os.environ.get('MYSQL_DATABASE'),
+    #     "USER": os.environ.get('MYSQL_USER'),
+    #     "PASSWORD": os.environ.get('MYSQL_PASSWORD'),
+    #     "HOST": os.environ.get('MYSQL_HOST'),
+    #     "PORT": os.environ.get('MYSQL_PORT'),
+    # }
+   'default': {
+       'ENGINE': 'django.db.backends.postgresql_psycopg2',
+       'NAME': 'railway',
+       'USER': 'postgres',
+       'PASSWORD': os.environ.get('PG_PASSWORD'),
+       'HOST':  os.environ.get('PGHOST'),
+       'PORT': os.environ.get('PGPORT'),
+   }
 }
 
 
@@ -149,3 +164,7 @@ GRAPH_MODELS = {
 GRAPH_MODELS = {
   'app_labels': ["api"],
 }
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
+MEDIA_URLS ='/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
