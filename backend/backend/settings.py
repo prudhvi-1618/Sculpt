@@ -138,9 +138,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-
-STATIC_ROOT = None 
-
+STATIC_ROOT = None  # Disable static file collection
+STATIC_URL = '/static/'  # Optional if you're not serving static files
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'  
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
