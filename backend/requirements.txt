@@ -57,7 +57,6 @@ marshmallow==3.21.3
 multidict==6.0.5
 mypy-extensions==1.0.0
 mysql-connector-python==9.2.0
-mysqlclient==2.2.7
 numpy==1.26.4
 orjson==3.10.6
 packaging==24.1
