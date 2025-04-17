@@ -8,6 +8,7 @@ db.sqlite3-journal
 /mediafiles/*
 __pycache__/
 /.vscode/
+migrations/
 
 # coverage result
 .coverage
@@ -18,6 +19,7 @@ __pycache__/
 
 # data
 *.dump
+datadump.json
 
 # npm
 node_modules/
