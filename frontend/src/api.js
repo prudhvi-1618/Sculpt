@@ -2,7 +2,7 @@ import {ACCESS_TOKEN} from './constants.js'
 import axios from 'axios'
 
 let api = axios.create({
-    baseURL:"http://127.0.0.1:8000"
+    baseURL: import.meta.env.VITE_API_URL
 })
 
 api.interceptors.request.use(
