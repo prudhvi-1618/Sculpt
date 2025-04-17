@@ -138,7 +138,7 @@ class ModelQueryView(APIView):
             for videocontent in Videocontents:
                 data += f'content of the video with name =  {videocontent.url_name} , youtube url link  = {videocontent.url}, content of the url = {videocontent.context}\n\n'
             answer = main(data,query)
-            print(videocontent.context)
+            print(answer)
             return Response({"query":query,"gpt":answer})
         except Exception as e:
             print(e)
