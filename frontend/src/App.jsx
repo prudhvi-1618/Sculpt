@@ -19,11 +19,10 @@ const RegisterLogout=()=>{
   return <Register/>
 }
 
+const App = () => {
   useEffect(()=>{
     const locomotiveScroll = new LocomotiveScroll();
   },)
-
-const App = () => {
   return (
     <BrowserRouter>
     <Routes>
