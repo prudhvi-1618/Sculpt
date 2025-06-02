@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BrowserRouter,Navigate,Routes,Route } from 'react-router-dom'
 import Home from './pages/Home'
 import ChatApp from './pages/ChatApp'
@@ -7,6 +7,8 @@ import Register from './pages/Register'
 import ProtectedRoute from './components/ProtectedRoute'
 import ChatWindow from './components/ChatWindow'
 import ChatForm from './components/ChatForm'
+import LocomotiveScroll from 'locomotive-scroll'
+import React from 'react'
 
 const Logout=()=>{
   localStorage.clear();
@@ -17,6 +19,10 @@ const RegisterLogout=()=>{
   localStorage.clear();
   return <Register/>
 }
+
+  useEffect(()=>{
+    const locomotiveScroll = new LocomotiveScroll();
+  },)
 
 const App = () => {
   return (
