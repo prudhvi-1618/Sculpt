@@ -8,7 +8,6 @@ import ProtectedRoute from './components/ProtectedRoute'
 import ChatWindow from './components/ChatWindow'
 import ChatForm from './components/ChatForm'
 import LocomotiveScroll from 'locomotive-scroll'
-import React from 'react'
 
 const Logout=()=>{
   localStorage.clear();
